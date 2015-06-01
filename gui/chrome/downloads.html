@@ -1,0 +1,101 @@
+<!DOCTYPE HTML>
+<html>
+
+    <head>
+        <title>Axel Download Accelerator</title>
+        <style>
+            body {
+                padding: 1em;
+                margin: 0;
+                font: 11px Monaco, Consolas, "Liberation Mono", Menlo, Courier, monospace;
+            }
+            
+            button {
+				background-image: -webkit-linear-gradient(#ededed, #ededed 38%, #dedede);
+				border: 1px solid rgba(0, 0, 0, 0.25);
+				border-radius: 2px;
+				box-shadow: 0 1px 0 rgba(0, 0, 0, 0.08), inset 0 1px 2px rgba(255, 255, 255, 0.75);
+				color: #444;
+				font: inherit;
+				margin: 0 1px 0 0;
+				text-shadow: 0 1px 0 white;
+				cursor: default;
+				min-height: 2em;
+				min-width: 4em;
+            }
+            button:focus {
+				border-color: blue;
+				outline: none;
+			}
+			button:active {
+				background-image: -webkit-linear-gradient(#e7e7e7, #e7e7e7 38%, #d7d7d7);
+				box-shadow: none;
+				text-shadow: none;
+			}
+            
+            /* download container */
+            .download {
+                padding: 5px;
+                background-color: ghostwhite;
+                border-bottom: solid 1px gainsboro;
+                border-left: solid 5px transparent;
+            }
+            .details {
+                word-wrap: break-word;
+                line-height: 1.5em;
+            }
+            .message {
+                color: grey;
+				display: block;
+            }
+            .url {
+                text-decoration: none;
+				display: block;
+            }
+			.size,
+			.file {
+				display: inline-block;
+            }
+            
+            /* controls */
+            .controls {
+            	margin-top: 4px;
+            }
+            .active     .retry,
+            .active     .remove { display: none; }
+            .done       .cancel,
+            .done       .retry  { display: none; }
+            .error      .cancel,
+            .incomplete .cancel { display: none; }
+            
+            /* activity color */
+            .active 	{ border-left-color: limegreen; }
+            .done 		{ border-left-color: dodgerblue; }
+            .error 		{ border-left-color: crimson; }
+            .incomplete { border-left-color: orange; }
+        </style>
+    </head>
+    
+    <body>
+        <div id="downloads"></div>
+        
+        <template class="download">
+            <div class="download">
+                <div class="details">
+                    <span class="size"></span>
+					<span class="file"></span>
+                    <a href="#" class="url"></a>
+                    <span class="message"></span>
+                </div>
+                <div class="controls">
+                    <button class="cancel">Cancel</button>
+                    <button class="retry">Retry</button>
+                    <button class="remove">Remove</button>
+                </div>
+            </div>
+        </template>
+        
+        <script src="downloads.js"></script>
+    </body>
+    
+</html>

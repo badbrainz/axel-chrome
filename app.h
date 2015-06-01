@@ -4,7 +4,7 @@
   * Copyright 2001 Wilmer van der Gaast                                *
   \********************************************************************/
 
-/* Configuration handling include file					*/
+/* Native messaging host IO					*/
 
 /*
   This program is free software; you can redistribute it and/or modify
@@ -23,34 +23,6 @@
   Suite 330, Boston, MA  02111-1307  USA
 */
 
-typedef struct
-{
-	char default_filename[MAX_STRING];
-	char http_proxy[MAX_STRING];
-	char no_proxy[MAX_STRING];
-	int strip_cgi_parameters;
-	int save_state_interval;
-	int connection_timeout;
-	int download_timeout;
-	int reconnect_delay;
-	int num_connections;
-	int buffer_size;
-	int max_speed;
-	int verbose;
-	int alternate_output;
-	
-	if_t *interfaces;
-	
-	int search_timeout;
-	int search_threads;
-	int search_amount;
-	int search_top;
+#define MAX_MESSAGE MAX_STRING * 4
 
-	int add_header_count;
-	char add_header[MAX_ADD_HEADERS][MAX_STRING];
-	
-	char user_agent[MAX_STRING];
-} conf_t;
-
-int conf_loadfile( conf_t *conf, char *file );
-int conf_init( conf_t *conf );
+int print_message( char* format, ... );

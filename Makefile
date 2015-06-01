@@ -50,7 +50,7 @@ uninstall-etc:
 
 ### MAIN PROGRAM
 
-$(OUTFILE): axel.o conf.o conn.o ftp.o http.o search.o tcp.o text.o
+$(OUTFILE): axel.o conf.o conn.o ftp.o http.o search.o tcp.o app.o
 	$(CC) *.o -o $(OUTFILE) $(LFLAGS)
 ifndef DEBUG
 	-$(STRIP) $(OUTFILE)

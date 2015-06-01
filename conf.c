@@ -83,6 +83,7 @@ int conf_loadfile( conf_t *conf, char *file )
 		get_config_number( strip_cgi_parameters );
 		get_config_number( save_state_interval );
 		get_config_number( connection_timeout );
+		get_config_number( download_timeout );
 		get_config_number( reconnect_delay );
 		get_config_number( num_connections );
 		get_config_number( buffer_size );
@@ -104,7 +105,7 @@ int conf_loadfile( conf_t *conf, char *file )
 		
 		if( !st )
 		{
-			fprintf( stderr, _("Error in %s line %i.\n"), file, line );
+			print_message( _("Error in %s line %i.\n"), file, line );
 			return( 0 );
 		}
 		get_config_number( add_header_count );
@@ -130,6 +131,7 @@ int conf_init( conf_t *conf )
 	conf->strip_cgi_parameters	= 1;
 	conf->save_state_interval	= 10;
 	conf->connection_timeout	= 45;
+	conf->download_timeout		= 30;
 	conf->reconnect_delay		= 20;
 	conf->num_connections		= 4;
 	conf->buffer_size		= 5120;

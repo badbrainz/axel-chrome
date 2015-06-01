@@ -256,7 +256,7 @@ void axel_start( axel_t *axel )
 	}
 	
 	/* The real downloading will start now, so let's start counting	*/
-	axel->start_time = gettime();
+	axel->last_transfer = axel->start_time = gettime();
 	axel->ready = 0;
 }
 
@@ -265,8 +265,10 @@ void axel_do( axel_t *axel )
 {
 	fd_set fds[1];
 	int hifd, i;
-	long long int remaining,size;
+	long long int remaining,size,downloaded;
 	struct timeval timeval[1];
+	
+	downloaded = 0;
 	
 	/* Create statefile if necessary				*/
 	if( gettime() > axel->next_state )
@@ -367,6 +369,7 @@ void axel_do( axel_t *axel )
 		}
 		axel->conn[i].currentbyte += size;
 		axel->bytes_done += size;
+		downloaded += size;
 	}
 	else
 	{
@@ -443,6 +446,19 @@ conn_check:
 	/* Ready?							*/
 	if( axel->bytes_done == axel->size )
 		axel->ready = 1;
+	else
+	{
+		if( downloaded == 0 )
+		{
+			if( gettime() - axel->last_transfer > axel->conf->download_timeout )
+			{
+				axel_message( axel, _("Download unexpectedly stopped") );
+				axel->ready = -1;
+			}
+		}
+		else
+			axel->last_transfer = gettime();
+	}
 }
 
 /* Close an axel connection						*/
@@ -580,13 +596,13 @@ static void axel_divide( axel_t *axel )
 	for( i = 1; i < axel->conf->num_connections; i ++ )
 	{
 #ifdef DEBUG
-		printf( "Downloading %lld-%lld using conn. %i\n", axel->conn[i-1].currentbyte, axel->conn[i-1].lastbyte, i - 1 );
+		print_message( "Downloading %lld-%lld using conn. %i\n", axel->conn[i-1].currentbyte, axel->conn[i-1].lastbyte, i - 1 );
 #endif
 		axel->conn[i].currentbyte = axel->conn[i-1].lastbyte + 1;
 		axel->conn[i].lastbyte = axel->conn[i].currentbyte + axel->size / axel->conf->num_connections;
 	}
 	axel->conn[axel->conf->num_connections-1].lastbyte = axel->size - 1;
 #ifdef DEBUG
-	printf( "Downloading %lld-%lld using conn. %i\n", axel->conn[i-1].currentbyte, axel->conn[i-1].lastbyte, i - 1 );
+	print_message( "Downloading %lld-%lld using conn. %i\n", axel->conn[i-1].currentbyte, axel->conn[i-1].lastbyte, i - 1 );
 #endif
 }

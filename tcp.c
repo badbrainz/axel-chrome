@@ -36,7 +36,7 @@ int tcp_connect( char *hostname, int port, char *local_if )
 #ifdef DEBUG
 	socklen_t i = sizeof( local );
 	
-	fprintf( stderr, "tcp_connect( %s, %i ) = ", hostname, port );
+	print_message( "tcp_connect( %s, %i ) = ", hostname, port );
 #endif
 	
 	/* Why this loop? Because the call might return an empty record.
@@ -77,7 +77,7 @@ int tcp_connect( char *hostname, int port, char *local_if )
 	
 #ifdef DEBUG
 	getsockname( fd, &local, &i );
-	fprintf( stderr, "%i\n", ntohs( local.sin_port ) );
+	print_message( "%i\n", ntohs( local.sin_port ) );
 #endif
 	
 	return( fd );

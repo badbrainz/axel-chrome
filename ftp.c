@@ -88,7 +88,7 @@ int ftp_cwd( ftp_t *conn, char *cwd )
 	ftp_command( conn, "CWD %s", cwd );
 	if( ftp_wait( conn ) / 100 != 2 )
 	{
-		fprintf( stderr, _("Can't change directory to %s\n"), cwd );
+		print_message( _("Can't change directory to %s\n"), cwd );
 		return( 0 );
 	}
 	
@@ -158,7 +158,7 @@ long long int ftp_size( ftp_t *conn, char *file, int maxredir )
 	}
 	
 #ifdef DEBUG
-	fprintf( stderr, reply );
+	print_message( reply );
 #endif
 	
 	/* Count the number of probably legal matches: Files&Links only	*/
@@ -278,7 +278,7 @@ int ftp_command( ftp_t *conn, char *format, ... )
 	va_end( params );
 	
 #ifdef DEBUG
-	fprintf( stderr, "fd(%i)<--%s", conn->fd, cmd );
+	print_message( "fd(%i)<--%s", conn->fd, cmd );
 #endif
 	
 	if( write( conn->fd, cmd, strlen( cmd ) ) != strlen( cmd ) )
@@ -344,7 +344,7 @@ int ftp_wait( ftp_t *conn )
 	while( complete != 2 );
 
 #ifdef DEBUG		
-	fprintf( stderr, "fd(%i)-->%s", conn->fd, conn->message );
+	print_message( "fd(%i)-->%s", conn->fd, conn->message );
 #endif
 	
 	if( ( s = strchr( conn->message, '\n' ) ) != NULL )

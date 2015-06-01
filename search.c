@@ -38,7 +38,7 @@ int main( int argc, char *argv[] )
 	
 	if( argc != 2 )
 	{
-		fprintf( stderr, "Incorrect amount of arguments\n" );
+		print_message( "Incorrect amount of arguments\n" );
 		return( 1 );
 	}
 	
@@ -51,13 +51,13 @@ int main( int argc, char *argv[] )
 	i = search_makelist( res, argv[1] );
 	if( i == -1 )
 	{
-		fprintf( stderr, "File not found\n" );
+		print_message( "File not found\n" );
 		return( 1 );
 	}
-	printf( "%i usable mirrors:\n", search_getspeeds( res, i ) );
+	print_message( "%i usable mirrors:\n", search_getspeeds( res, i ) );
 	search_sortlist( res, i );
 	for( j = 0; j < i; j ++ )
-		printf( "%-70.70s %5i\n", res[j].url, res[j].speed );
+		print_message( "%-70.70s %5i\n", res[j].url, res[j].speed );
 	
 	return( 0 );
 }

@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+
+if [ ! -f build.settings ]; then
+    echo Run configure first.
+    exit 0
+fi
+
+. build.settings
+
+if [ "$EXTENSION" == "" ]; then
+    echo Must specify extension ID
+    exit 1
+fi
+
+jsonpath=""
+
+if [ "$BROWSER" != "google-chrome" ]; then
+    jsonpath="/etc/chromium/native-messaging-hosts"
+else
+    jsonpath="/etc/opt/chrome/native-messaging-hosts"
+fi
+
+#Chrome/Chromium (OS_LINUX) doesn't support user-specific install.
+if [ $EUID != 0 ]; then
+    echo "Must be root to install."
+    exit 1
+fi
+
+mkdir -p $jsonpath
+
+template='"%s":"%s",\n'
+{
+printf "{\n";
+printf $template "name" "$HOSTNAME";
+printf $template "description" "$DESCRIPTION";
+printf $template "path" "$DIR/$NAME";
+printf $template "type" "stdio";
+printf '"%s":["chrome-extension://%s/"]\n' "allowed_origins" "$EXTENSION";
+printf "}"
+} > $jsonpath/$HOSTNAME.json
+
+chmod o+r $jsonpath/$HOSTNAME.json
+
+echo Registered: $EXTENSION
+echo $jsonpath/$HOSTNAME.json

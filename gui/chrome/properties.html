@@ -1,0 +1,133 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>Download Options</title>
+        <style>
+            body, html {
+                margin: 0;
+                padding: 0;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                cursor: default;
+                background-color: whitesmoke;
+                -webkit-user-select: none;
+            }
+            body {
+            	padding: 1em;
+                margin: 0;
+                font: 11px Monaco, Consolas, "Liberation Mono", Menlo, Courier, monospace;
+            }
+            button {
+				background-image: -webkit-linear-gradient(#ededed, #ededed 38%, #dedede);
+				border: 1px solid rgba(0, 0, 0, 0.25);
+				border-radius: 2px;
+				box-shadow: 0 1px 0 rgba(0, 0, 0, 0.08), inset 0 1px 2px rgba(255, 255, 255, 0.75);
+				color: #444;
+				font: inherit;
+				margin: 0 1px 0 0;
+				text-shadow: 0 1px 0 white;
+				cursor: default;
+				min-height: 2em;
+				min-width: 4em;
+            }
+            button:focus {
+				border-color: blue;
+				outline: none;
+			}
+			button:active {
+				background-image: -webkit-linear-gradient(#e7e7e7, #e7e7e7 38%, #d7d7d7);
+				box-shadow: none;
+				text-shadow: none;
+			}
+            * {
+                box-sizing: border-box;
+            }
+
+            #header {
+                display: flex;
+                height: 3em;
+                align-items: center;
+            }
+            .title {
+                flex: 1 0 auto;
+                text-align: center;
+            }
+
+            #main{
+            	display:flex;
+                flex: 1;
+                flex-direction: column;
+            }
+            .label {
+                display: flex;
+                margin: 5px 0;
+            }
+            .label span {
+                align-self: center;
+            }
+            .label span {
+                width: 90px;
+                text-align: end;
+            }
+            .label input {
+                flex: 1;
+                margin: 0;
+                padding: 2px;
+				font: inherit;
+            }
+
+            #controls {
+                align-self: flex-end;
+            }
+
+            #header,
+            #main,
+            #controls {
+            	line-height: 1.5em;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div id="header">
+            <div class="title">Axel Download Accelerator - Download Options.</div>
+        </div>
+        
+        <div id="main">
+            <div class="label">
+                <span>URL:</span>
+                <input id="url" type="text" spellcheck="false" disabled>
+            </div>
+            <div class="label">
+                <span>Directory:</span>
+                <input id="output" type="text" spellcheck="false">
+            </div>
+            <div class="label">
+                <span>File name:</span>
+                <input id="filename" type="text" spellcheck="false" pattern="^[-\w^&'@{}[\],$=!#().%+~ ]+$">
+            </div>
+            <div class="label">
+                <span>Connections:</span>
+                <input id="num_connections" type="number" min="1">
+            </div>
+            <div class="label">
+                <span>Max bps:</span>
+                <input id="max_speed" type="number" min="0">
+            </div>
+			<div class="label">
+                <span>User-agent:</span>
+                <input id="user_agent" type="text">
+            </div>
+        </div>
+        
+        <div id="controls">
+            <button id="start">Start</button>
+            <button id="exit">Exit</button>
+        </div>
+        
+        <script src="conf.js"></script>
+        <script src="properties.js"></script>
+    </body>
+
+</html>

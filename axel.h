@@ -85,6 +85,7 @@ typedef message_t if_t;
 #include "http.h"
 #include "conn.h"
 #include "search.h"
+#include "app.h"
 
 #define min( a, b )		( (a) < (b) ? (a) : (b) )
 #define max( a, b )		( (a) > (b) ? (a) : (b) )
@@ -95,6 +96,7 @@ typedef struct
 	conf_t conf[1];
 	char filename[MAX_STRING];
 	double start_time;
+	double last_transfer;
 	int next_state, finish_time;
 	long long bytes_done, start_byte, size;
 	int bytes_per_second;

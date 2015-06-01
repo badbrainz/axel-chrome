@@ -1,0 +1,28 @@
+{
+    "name": "Axel",
+    "version": "1.0",
+    "manifest_version": 2,
+    "description": "Front-end for Axel - a light download accelerator",
+
+    "icons": {
+        "48": "icon48.png",
+        "128": "icon128.png"
+    },
+
+    "background": {
+        "scripts": [
+        	"config.js",
+            "conf.js",
+            "axel.js",
+            "background.js"
+        ]
+    },
+    
+    "options_page": "options.html",
+
+    "permissions": [
+    	"storage",
+        "contextMenus",
+        "nativeMessaging"
+    ]
+}

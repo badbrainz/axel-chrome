@@ -26,6 +26,10 @@
 #
 # connection_timeout = 45
 
+# If no data is downloaded for this number of seconds, abort the download.
+#
+# download_timeout = 30
+
 # Set proxies. no_proxy is a comma-separated list of domains which are
 # local, axel won't use any proxy for them. You don't have to specify full
 # hostnames there.

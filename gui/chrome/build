@@ -1,0 +1,131 @@
+#!/usr/bin/env bash
+
+if [ ! -f build.settings ]; then
+    echo Run configure first.
+    exit 0
+fi
+
+. build.settings
+
+browser=$(type -p $BROWSER)
+
+revision=`hg parent --template '{node}'`
+
+pack=0
+clean=0
+run=0
+
+files_src=(*.png
+		   config.js
+           conf.js
+           axel.js
+           downloads.js
+           downloads.html
+           options.js
+           options.html
+           properties.js
+           properties.html)
+
+files_background=(background.js)
+
+
+isdirty() {
+    return `hg st -mard $1 | grep -q .`
+}
+
+addrevision () {
+    echo "adding revision number"
+    echo $1 > $2/REVISION
+}
+
+compilescripts() {
+    echo "compiling $2:"
+    if [ -e $2 ]; then
+        echo "overwriting $2!"
+    fi
+    for i in ${!1}; do
+        echo -e "\t$i"
+        cat $i >> $2
+    done
+}
+
+linkresources() {
+    echo "linking:"
+    for i in ${!1}; do
+        echo -e "\t$i"
+        ln -s $(readlink -f $i) $2
+    done
+}
+
+writemanifest() {
+    echo "writing manifest"
+    cp manifest.json $1
+}
+
+buildextension() {
+    echo "building extension"
+    cp -rL $1 $2
+}
+
+packextension() {
+    echo "packing extension..." 
+    if [ -x "$browser" ]; then
+        "$browser" ${CRFLAGS[@]} $1
+    fi
+    (cd $1; zip -vr --filesync ../$1.zip .)
+    echo "-------"
+    du -b $1.zip
+    zip -T $1.zip
+}
+
+runextension() {
+    if [ -x "$browser" ]; then
+        echo "running extension..."
+        "$browser" ${CTFLAGS[@]} --load-extension="$1" --user-data-dir="$2"
+    fi
+}
+
+initdir() {
+    echo "initializing $1/"
+    mkdir -p $1
+    rm -rf $1/*
+}
+
+cleanup() {
+    echo "removing $1/"
+    rm -rf $1
+}
+
+while [ $# -gt 0 ]; do
+    case "$1" in
+         pack ) pack=1;;
+        clean ) clean=1;;
+          run ) run=1;;
+            * ) ;;
+    esac
+    shift
+done
+
+cleanup $RELEASEDIR
+if [ $clean -eq 1 ]; then
+    cleanup $DATADIR
+    exit 0
+fi
+
+initdir $TEMPDIR
+compilescripts files_background[@] $TEMPDIR/background.js
+linkresources files_src[@] $TEMPDIR
+writemanifest $TEMPDIR
+buildextension $TEMPDIR $RELEASEDIR
+
+if ! isdirty "."; then
+    addrevision "$revision" $RELEASEDIR
+fi
+
+if [ $pack -eq 1 ]; then
+    packextension $RELEASEDIR
+fi
+
+if [ $run -eq 1 ]; then
+    runextension $RELEASEDIR $PROFILEDIR
+fi

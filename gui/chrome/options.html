@@ -1,0 +1,78 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>Global Options</title>
+        <style>
+            body, html {
+                margin: 0;
+                padding: 0;
+                height: 100%;
+            }
+            body {
+				font: 11px Monaco, Consolas, "Liberation Mono", Menlo, Courier, monospace;
+				max-width: 800px;
+				cursor: default;
+				display: flex;
+				flex-direction: column;
+				-webkit-user-select: none;
+            }
+            * {
+                box-sizing: border-box;
+            }
+
+            #main{
+                display:flex;
+                flex: 1;
+                flex-direction: column;
+            }
+            .label {
+                display: flex;
+                margin: 5px 0;
+            }
+            .label span {
+                align-self: center;
+            }
+            .label span:first-child {
+                flex-basis: 100px;
+                text-align: end;
+            }
+            .label input {
+                flex: 1;
+                margin: 0 5px;
+                padding: 2px;
+                font: inherit;
+            }
+            .header,
+            #main {
+                padding: 5px;
+            }
+        </style>
+    </head>
+
+    <body>
+        <h4 class="header">Axel Download Accelerator - Global Options.</h4>
+        
+        <div id="main">
+            <div class="label">
+            	<span>Directory:</span>
+                <input id="output" type="text" spellcheck="false">
+            </div>
+            <div class="label">
+                <span>Connections:</span>
+                <input id="num_connections" type="number" min="1">
+            </div>
+            <div class="label">
+                <span>Max bps:</span>
+                <input id="max_speed" type="number" min="0">
+            </div>
+            <div class="label">
+                <span>User-agent:</span>
+                <input id="user_agent" type="text" spellcheck="false">
+            </div>
+        </div>
+        
+        <script src="conf.js"></script>
+        <script src="options.js"></script>
+    </body>
+
+</html>
