@@ -1,6 +1,7 @@
 Axel Home:
 
     See http://axel.alioth.debian.org/ for latest information on axel
+    Or https://bitbucket.org/mirrorbrain/craxel for info on craxel
 
 /*************************\
 * Supported architectures *
@@ -18,6 +19,8 @@ go wrong.
 * How to install/use *
 \********************/
 
+Note: This is a clone of Axel 2.4. It has been modifed to support Google Chrome
+Native Host Messaging. It is not meant to be used from the command line.
 
 Run the configure script (you can supply some options if you want, try
 './configure --help' for more info) and then run make. The program should
@@ -26,20 +29,12 @@ the program using 'make install' or you can just run it from the current
 directory. You can copy the axelrc.example file to ~/.axelrc then, if you
 want to change some of the settings.
 
-
-Run the program like this:
-
-axel ftp://ftp.nl.kernel.org/pub/linux/kernel/v2.2/linux-2.2.20.tar.bz2
-
-For a simple single-server-multiple-connection download, or:
-
-axel ftp://ftp.{nl,be,de}.kernel.org/pub/linux/kernel/v2.2/linux-2.2.20.tar.bz2
-
-If you want to use those three servers for the download. The program can do
-an automatic search for FTP mirrors as well (filesearching.com), but that's
-not yet perfect... Just try the -S option. (The line above should at least
-work with the Bash shell. You can type all the mirrors by hand as well, if
-you really want to, and/or of necessary...)
+To build the Chrome extension, you'll need the extension ID that is generated
+by Chrome. cd to the gui/chrome directory and run the configure and build
+scripts. Next, install the extension, copy the ID from chrome://extensions and
+paste it into the configure script, and then run the configure and build scripts
+again. This is the only method I know of that gives us the extension ID. The
+last step is to register the native host app by running the install script.
 
 
 Just one other thing you should keep in mind when using this program: Some
