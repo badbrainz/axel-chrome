@@ -2,11 +2,7 @@ This is a clone of Axel 2.4. It has been modifed to support Google Chrome
 Native Host Messaging. It is not meant to be used from the command line.
 
 Original author: 
-    Wilmer van der Gaast. <wilmer@gaast.net>
-
-Axel Home:
-    See http://axel.alioth.debian.org/ for latest information on axel
-    
+    Wilmer van der Gaast. <wilmer@gaast.net>    
 
 ### Supported architectures
 Should compile on any decent Linux system. Additionaly, it should compile
